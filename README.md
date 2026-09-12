@@ -4,7 +4,13 @@ Follow a rainbow into the forest, find the ancient unicorn, and ride her home wh
 
 Your journey begins with the village elder and a bow. Beyond the houses, the trail winds through a forest of pines, rocks and mist. Finding the unicorn is only the first half of the rescue: you still have to survive the ride back.
 
-[The journey](#the-journey) · [How to play](#how-to-play) · [Development](#development) · [Build and checks](#build-and-checks)
+[Full VR playthrough](#full-vr-playthrough) · [The journey](#the-journey) · [How to play](#how-to-play) · [Development](#development) · [Build and checks](#build-and-checks)
+
+## Full VR playthrough
+
+[![The Horde — Full VR Playthrough](https://img.youtube.com/vi/xCkMFxaSW9k/hqdefault.jpg)](https://youtu.be/xCkMFxaSW9k)
+
+[Watch the full playthrough on YouTube](https://youtu.be/xCkMFxaSW9k), recorded on Meta Quest 2 from start to finish.
 
 ## The journey
 
