@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "profiles": {
+    "packed": {
+      "options": {
+        "modelRecipBaseCount": 11,
+        "numAbbreviations": 34,
+        "sparseSelectors": [
+          0,
+          1,
+          2,
+          3,
+          6,
+          7,
+          13,
+          21,
+          25,
+          42,
+          94,
+          353
+        ],
+        "precision": 14,
+        "recipLearningRate": 1333
+      }
+    },
+    "all-packed": {
+      "options": {
+        "numAbbreviations": 32,
+        "recipLearningRate": 1596,
+        "modelMaxCount": 4,
+        "modelRecipBaseCount": 17,
+        "precision": 15,
+        "dynamicModels": 1,
+        "sparseSelectors": [
+          0,
+          1,
+          2,
+          3,
+          6,
+          7,
+          13,
+          25,
+          42,
+          49,
+          92,
+          449
+        ],
+        "maxMemoryMB": 150
+      },
+      "inputSHA256": "05d6f94d4ce7dc536d3350da6346ed4ba51e51b8577cdb4a8136f704780ef9eb"
+    }
+  }
+}

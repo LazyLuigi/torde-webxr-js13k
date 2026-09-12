@@ -1,0 +1,40 @@
+import {build} from 'esbuild';
+import {chromium} from 'playwright';
+import assert from 'node:assert/strict';
+import {mkdir,writeFile} from 'node:fs/promises';
+const out='.dream-loop/launch-check';await mkdir(out,{recursive:true});
+const runtime=(await build({stdin:{contents:"import{XRDevice,metaQuest3}from'iwer';const d=new XRDevice(metaQuest3);d.installRuntime({forceInstall:true});",resolveDir:process.cwd()},bundle:true,write:false,format:'iife'})).outputFiles[0].text;
+const browser=await chromium.launch({headless:false,args:['--use-angle=metal','--ignore-gpu-blocklist']});
+const errors=[],report={};
+try{
+ const page=await browser.newPage();page.on('pageerror',e=>errors.push(e.message));
+ await page.addInitScript({content:runtime});
+ await page.addInitScript(()=>{
+  const request=navigator.xr.requestSession.bind(navigator.xr);globalThis.requests=0;
+  navigator.xr.requestSession=async(...args)=>{requests++;if(requests===1)throw Error('Simulated permission denial');return request(...args);};
+ });
+ await page.goto(process.env.TEST_URL||'http://localhost:4174');
+ const intro=page.locator('#intro[data-ready="1"]');await intro.waitFor();
+ assert.equal(await page.locator('#play,#vr,#buttons').count(),0,'No launch buttons in the development copy either');
+ await page.locator('#mute').click();assert.equal(await page.evaluate(()=>requests),0,'Sound control never starts VR');
+ await intro.click({position:{x:30,y:30}});
+ await page.waitForFunction(()=>document.getElementById('launch').textContent.includes('retry'));
+ assert(await intro.isVisible(),'Permission failure keeps the welcome screen available');
+ await page.evaluate(()=>{document.getElementById('intro').click();document.getElementById('intro').click();});
+ await page.waitForFunction(()=>torde.renderer.xr.isPresenting&&torde.state().mode==='play');
+ assert.equal(await page.evaluate(()=>requests),2,'Double click makes only one pending session request');
+ assert(!await intro.isVisible(),'Successful entry hides the welcome screen');
+ const before=await page.evaluate(()=>torde.state().sanctuary);
+ await page.evaluate(()=>torde.renderer.xr.getSession().end());await page.waitForFunction(()=>torde.state().paused);
+ await intro.focus();await page.keyboard.press('Enter');
+ await page.waitForFunction(()=>torde.renderer.xr.isPresenting&&!torde.state().paused);
+ assert.equal(await page.evaluate(()=>torde.state().sanctuary),before,'Re-entry resumes the same game');
+ report.screenClick=true;report.retry=true;report.singleRequest=true;report.keyboardResume=true;
+ await page.evaluate(()=>torde.renderer.xr.getSession().end());await page.close();
+ const desktop=await browser.newPage();desktop.on('pageerror',e=>errors.push(e.message));
+ await desktop.addInitScript(()=>Object.defineProperty(navigator,'xr',{value:undefined,configurable:true}));
+ await desktop.goto(process.env.TEST_URL||'http://localhost:4174');await desktop.locator('#intro[data-ready="1"]').click({position:{x:35,y:100}});
+ await desktop.waitForFunction(()=>torde.state().mode==='play'&&!!document.pointerLockElement);report.desktopPlaytest=true;
+ await desktop.screenshot({path:out+'/desktop.png'});
+ assert.deepEqual(errors,[]);await writeFile(out+'/report.json',JSON.stringify({...report,errors},null,2));console.log({...report,errors});
+}finally{await browser.close();}

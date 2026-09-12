@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.dream-loop/
+.js13k-check/
+logs/
+.DS_Store
+.local/
+media/.js13k-images/
+media/cover-proposals/
+media/model-concepts/
+media/cover-src.png
+js13k-game.zip
+!package-lock.json

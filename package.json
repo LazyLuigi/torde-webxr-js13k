@@ -1,0 +1,37 @@
+{
+  "name": "torde",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "TORDE \u2014 rescue the ancestral unicorn. js13kGames 2026 WebXR.",
+  "scripts": {
+    "playtest": "node tools/playtest.mjs",
+    "playtest:ride": "node tools/playtest.mjs --ride",
+    "build:ride": "node tools/build.mjs --pack --release --ride",
+    "test:ride": "node tools/test-ride.mjs",
+    "test:ride:xr": "node tools/test-ride-xr.mjs",
+    "test:ride:packed": "node tools/test-ride-packed.mjs",
+    "test:convergence": "node tools/test-convergence.mjs",
+    "dev": "node tools/serve.mjs",
+    "build": "node tools/build.mjs --pack --release",
+    "find-best-roadroller": "node tools/find-best-roadroller.mjs",
+    "test": "node tools/test.mjs",
+    "build:fast": "node tools/build.mjs",
+    "build:release": "node tools/build.mjs --pack --release",
+    "test:xr": "node tools/test-xr.mjs",
+    "test:desktop": "node tools/test-desktop.mjs",
+    "test:map": "node tools/test-map.mjs",
+    "profile": "node tools/profile.mjs",
+    "quest:deploy": "node tools/quest/deploy.mjs",
+    "test:ending": "node tools/test-ending.mjs",
+    "test:reinforcements": "node tools/test-reinforcements.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "iwer": "2.3.0",
+    "playwright": "1.63.0",
+    "roadroller": "2.1.0",
+    "terser": "5.51.2",
+    "three": "0.185.0"
+  }
+}
